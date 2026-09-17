@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Générateur Pro de Licences avec Liens Valides</title>
+    <title>Générateur Pro de Licences (Architecture Modulaire)</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -183,54 +183,73 @@
 
 <header>
     <div class="brand">
-        <i class="fa-solid fa-link"></i>
-        <span>LicenseGen Pro (URL-Safe)</span>
+        <i class="fa-solid fa-folder-tree"></i>
+        <span>LicenseGen Pro (Fichiers Externe `.md`)</span>
     </div>
 </header>
 
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <i class="fa-solid fa-sliders" style="color: var(--accent-blue);"></i> Configuration des Informations & Liens
+            <i class="fa-solid fa-sliders" style="color: var(--accent-blue);"></i> Configuration des Informations
         </div>
 
         <div class="form-group">
-            <label for="licenseSelect">Licence Légale</label>
-            <select id="licenseSelect" onchange="generateLicense()">
-                <option value="cc-by-sa-4">CC BY-SA 4.0 (Creative Commons Attribution - Partage Mêmes Conditions)</option>
-                <option value="cc-by-4">CC BY 4.0 (Creative Commons Attribution)</option>
-                <option value="cc-by-nc-4">CC BY-NC 4.0 (Creative Commons Pas d'Usage Commercial)</option>
-                <option value="cc0">CC0 1.0 (Domaine Public)</option>
-                <option value="strict-asset">Licence Propriétaire Stricte (Assets de jeu / Anti-Copy)</option>
-                <option value="mit">MIT License (Open Source)</option>
+            <label for="licenseSelect">Modèle de Licence (Fichier `.md` source)</label>
+            <select id="licenseSelect" onchange="loadAndGenerateLicense()">
+                <optgroup label="Creative Commons (International v4.0)">
+                    <option value="cc-by-sa-4.md">CC BY-SA 4.0 (Attribution - ShareAlike)</option>
+                    <option value="cc-by-4.md">CC BY 4.0 (Attribution Pure)</option>
+                    <option value="cc-by-nc-4.md">CC BY-NC 4.0 (Non Commercial)</option>
+                    <option value="cc-by-nc-sa-4.md">CC BY-NC-SA 4.0 (Non Commercial - ShareAlike)</option>
+                    <option value="cc-by-nd-4.md">CC BY-ND 4.0 (Pas de Modification)</option>
+                    <option value="cc-by-nc-nd-4.md">CC BY-NC-ND 4.0 (Non Commercial - Pas de Modif)</option>
+                    <option value="cc0.md">CC0 1.0 (Domaine Public)</option>
+                </optgroup>
+                <optgroup label="Assets de Jeu & Droits Stricts">
+                    <option value="game-asset-strict.md">Assets de Jeu - Anti-Scraping / Anti-IA / Anti-Redistribution</option>
+                    <option value="proprietary-strict.md">Licence Propriétaire - Tous Droits Réservés</option>
+                </optgroup>
+                <optgroup label="Open Source / Software">
+                    <option value="mit.md">MIT License</option>
+                    <option value="apache2.md">Apache License 2.0</option>
+                    <option value="gpl3.md">GNU GPL v3.0</option>
+                    <option value="bsd-3.md">BSD 3-Clause License</option>
+                    <option value="mpl2.md">Mozilla Public License 2.0</option>
+                </optgroup>
             </select>
         </div>
 
         <div class="form-group">
             <label for="projectName">Nom du Projet / Asset</label>
-            <input type="text" id="projectName" value="Pixel Art Potion Asset Pack - 32 Colors PNG" oninput="generateLicense()">
+            <input type="text" id="projectName" value="Pixel Art Potion Asset Pack - 32 Colors PNG" oninput="renderLicense()">
         </div>
 
         <div class="form-group">
-            <label for="projectUrl">URL du Projet (Redirection cliquable)</label>
-            <input type="text" id="projectUrl" value="https://nathstudio.itch.io/pixel-art-potion-pack" oninput="generateLicense()">
-            <span class="hint">Les préfixes http:// ou https:// seront automatiquement ajoutés s'ils manquent.</span>
+            <label for="projectUrl">URL du Projet (Lien Cliquable)</label>
+            <input type="text" id="projectUrl" value="https://nathstudio.itch.io/pixel-art-potion-pack" oninput="renderLicense()">
+            <span class="hint">Préfixe https:// ajouté automatiquement si absent.</span>
         </div>
 
         <div class="grid-2">
             <div class="form-group">
-                <label for="authorName">Nom de l'Auteur</label>
-                <input type="text" id="authorName" value="Nathaël Delmas" oninput="generateLicense()">
+                <label for="authorName">Nom de l'Auteur / Titulaire</label>
+                <input type="text" id="authorName" value="Nathaël Delmas" oninput="renderLicense()">
             </div>
             <div class="form-group">
-                <label for="year">Année</label>
-                <input type="text" id="year" value="2026" oninput="generateLicense()">
+                <label for="year">Année(s)</label>
+                <input type="text" id="year" value="2026" oninput="renderLicense()">
             </div>
         </div>
 
         <div class="form-group">
             <label for="authorUrl">URL du Profil / Site Web de l'Auteur</label>
-            <input type="text" id="authorUrl" value="https://nathstudio.itch.io/" oninput="generateLicense()">
+            <input type="text" id="authorUrl" value="https://nathstudio.itch.io/" oninput="renderLicense()">
+        </div>
+
+        <div class="form-group">
+            <label for="creditFormat">Format d'Attribution / Crédit Obligatoire</label>
+            <input type="text" id="creditFormat" value="Pixel Art Potion Asset Pack par Nathaël Delmas (https://nathstudio.itch.io/)" oninput="renderLicense()">
         </div>
     </div>
 
@@ -249,7 +268,8 @@
 </div>
 
 <script>
-// Fonction qui sécurise les URLs pour qu'elles fonctionnent toujours en Markdown
+let rawTemplate = "";
+
 function fixUrl(url) {
     let cleanUrl = url.trim();
     if (!cleanUrl || cleanUrl === '#') return '#';
@@ -259,99 +279,37 @@ function fixUrl(url) {
     return cleanUrl;
 }
 
-const templates = {
-    "cc-by-sa-4": `# Creative Commons Attribution-ShareAlike 4.0 International Public License
+// Récupère le fichier .md sélectionné dans le dossier /licenses/
+async function loadAndGenerateLicense() {
+    const file = document.getElementById('licenseSelect').value;
+    try {
+        const response = await fetch(`./licenses/${file}`);
+        if (!response.ok) throw new Error("Fichier introuvable");
+        rawTemplate = await response.text();
+        renderLicense();
+    } catch (err) {
+        document.getElementById('output').value = `Erreur de chargement du fichier licenses/${file}.\nVérifiez que le fichier existe bien dans votre dépôt GitHub.`;
+    }
+}
 
-Work: [{PROJECT_NAME}]({PROJECT_URL})
-Copyright (c) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL})
-
-This work is licensed under the **Creative Commons Attribution-ShareAlike 4.0 International License**.
-
-### Terms Summary:
-You are free to:
-- **Share**: Copy and redistribute the material in any medium or format.
-- **Adapt**: Remix, transform, and build upon the material for any purpose, even commercially.
-
-Under the following conditions:
-- **Attribution**: You must give appropriate credit to [{AUTHOR_NAME}]({AUTHOR_URL}), provide a link to the license, and indicate if changes were made.
-- **ShareAlike**: If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
-
-### Official Deed & Legal Text:
-To view a full copy of this license, visit:
-[https://creativecommons.org/licenses/by-sa/4.0/](https://creativecommons.org/licenses/by-sa/4.0/) or read the official Legal Code at [https://creativecommons.org/licenses/by-sa/4.0/legalcode](https://creativecommons.org/licenses/by-sa/4.0/legalcode).`,
-
-    "cc-by-4": `# Creative Commons Attribution 4.0 International Public License
-
-Work: [{PROJECT_NAME}]({PROJECT_URL})
-Copyright (c) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL})
-
-This work is licensed under the **Creative Commons Attribution 4.0 International License**.
-
-### Terms Summary:
-You are free to:
-- **Share**: Copy and redistribute the material in any medium or format.
-- **Adapt**: Remix, transform, and build upon the material for any purpose, even commercially.
-
-Under the following conditions:
-- **Attribution**: You must give appropriate credit to [{AUTHOR_NAME}]({AUTHOR_URL}), provide a link to the license, and indicate if changes were made.
-
-### Official Deed & Legal Text:
-[https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)`,
-
-    "cc-by-nc-4": `# Creative Commons Attribution-NonCommercial 4.0 License
-
-Work: [{PROJECT_NAME}]({PROJECT_URL})
-Copyright (c) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL})
-
-This work is licensed under the **CC BY-NC 4.0 License**.
-
-Commercial use of [{PROJECT_NAME}]({PROJECT_URL}) is strictly prohibited without written consent from [{AUTHOR_NAME}]({AUTHOR_URL}).
-
-### Official Deed:
-[https://creativecommons.org/licenses/by-nc/4.0/](https://creativecommons.org/licenses/by-nc/4.0/)`,
-
-    "cc0": `# CC0 1.0 Universal (Public Domain Dedication)
-
-Work: [{PROJECT_NAME}]({PROJECT_URL})
-Dedicated by: [{AUTHOR_NAME}]({AUTHOR_URL}) ({YEAR})
-
-### Official Legal Text:
-[https://creativecommons.org/publicdomain/zero/1.0/](https://creativecommons.org/publicdomain/zero/1.0/)`,
-
-    "strict-asset": `# Proprietary Game Asset License
-
-Asset Name: [{PROJECT_NAME}]({PROJECT_URL})
-Author: [{AUTHOR_NAME}]({AUTHOR_URL})
-Copyright (c) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL}). All Rights Reserved.
-
-### Conditions:
-1. You may use [{PROJECT_NAME}]({PROJECT_URL}) in your published games or projects.
-2. You CANNOT resell, redistribute, or share the source files.
-3. Training AI models using this asset is explicitly prohibited.`,
-
-    "mit": `# MIT License
-
-Copyright (c) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL}) - [{PROJECT_NAME}]({PROJECT_URL})
-
-Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files.`
-};
-
-function generateLicense() {
-    const key = document.getElementById('licenseSelect').value;
-    const template = templates[key];
+// Remplace dynamiquement les balises dans le fichier .md chargé
+function renderLicense() {
+    if (!rawTemplate) return;
 
     const projName = document.getElementById('projectName').value || 'Project';
     const projUrl = fixUrl(document.getElementById('projectUrl').value);
     const author = document.getElementById('authorName').value || 'Author';
     const authorUrl = fixUrl(document.getElementById('authorUrl').value);
     const year = document.getElementById('year').value || '2026';
+    const credit = document.getElementById('creditFormat').value || `${projName} by ${author}`;
 
-    let result = template
+    let result = rawTemplate
         .replaceAll('{PROJECT_NAME}', projName)
         .replaceAll('{PROJECT_URL}', projUrl)
         .replaceAll('{AUTHOR_NAME}', author)
         .replaceAll('{AUTHOR_URL}', authorUrl)
-        .replaceAll('{YEAR}', year);
+        .replaceAll('{YEAR}', year)
+        .replaceAll('{CREDIT_FORMAT}', credit);
 
     document.getElementById('output').value = result;
 }
@@ -360,7 +318,7 @@ function copyText() {
     const area = document.getElementById('output');
     area.select();
     navigator.clipboard.writeText(area.value);
-    alert('Licence copiée avec liens valides !');
+    alert('Licence copiée !');
 }
 
 function downloadFile() {
@@ -372,7 +330,7 @@ function downloadFile() {
     a.click();
 }
 
-window.onload = generateLicense;
+window.onload = loadAndGenerateLicense;
 </script>
 
 </body>
