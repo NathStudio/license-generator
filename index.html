@@ -3,101 +3,87 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Générateur Pro de Licences Markdown (LICENSE.md)</title>
-    <!-- Google Fonts & Font Awesome Icons -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+    <title>Générateur Pro de Licences avec Liens Valides</title>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
         :root {
-            --bg-main: #0d1117;
-            --bg-card: #161b22;
-            --bg-input: #21262d;
-            --border-color: #30363d;
-            --text-primary: #f0f6fc;
-            --text-secondary: #8b949e;
-            --accent: #238636;
-            --accent-hover: #2ea043;
-            --brand-blue: #58a6ff;
-            --font-main: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
-            --font-code: 'Fira Code', monospace;
+            --bg-dark: #090d16;
+            --card-bg: #111827;
+            --card-border: #1f2937;
+            --input-bg: #030712;
+            --text-main: #f9fafb;
+            --text-muted: #9ca3af;
+            --accent-green: #10b981;
+            --accent-green-hover: #059669;
+            --accent-blue: #3b82f6;
+            --font-ui: 'Plus Jakarta Sans', sans-serif;
+            --font-code: 'JetBrains Mono', monospace;
         }
 
-        * { box-sizing: border-box; }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
 
         body {
-            font-family: var(--font-main);
-            background-color: var(--bg-main);
-            color: var(--text-primary);
-            margin: 0;
-            padding: 0;
+            font-family: var(--font-ui);
+            background-color: var(--bg-dark);
+            color: var(--text-main);
+            min-height: 100vh;
             display: flex;
             flex-direction: column;
-            min-height: 100vh;
         }
 
         header {
-            background-color: var(--bg-card);
-            border-bottom: 1px solid var(--border-color);
-            padding: 20px 40px;
+            background: rgba(17, 24, 39, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--card-border);
+            padding: 16px 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
         }
 
-        header h1 {
-            margin: 0;
-            font-size: 1.4rem;
+        .brand {
             display: flex;
             align-items: center;
-            gap: 10px;
-            color: var(--text-primary);
+            gap: 12px;
+            font-weight: 700;
+            font-size: 1.25rem;
         }
 
-        header h1 i { color: var(--brand-blue); }
+        .brand i { color: var(--accent-green); }
 
-        .badge {
-            background-color: rgba(88, 166, 255, 0.15);
-            color: var(--brand-blue);
-            font-size: 0.75rem;
-            padding: 4px 8px;
-            border-radius: 12px;
-            border: 1px solid rgba(88, 166, 255, 0.3);
-        }
-
-        .main-wrapper {
+        .container {
             display: grid;
-            grid-template-columns: 450px 1fr;
-            gap: 25px;
-            padding: 30px 40px;
+            grid-template-columns: 480px 1fr;
+            gap: 24px;
+            padding: 32px;
+            max-width: 1600px;
+            margin: 0 auto;
+            width: 100%;
             flex: 1;
         }
 
-        @media (max-width: 1024px) {
-            .main-wrapper {
-                grid-template-columns: 1fr;
-                padding: 20px;
-            }
+        @media (max-width: 1100px) {
+            .container { grid-template-columns: 1fr; padding: 16px; }
         }
 
-        .panel {
-            background-color: var(--bg-card);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
-            padding: 25px;
+        .card {
+            background-color: var(--card-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 12px;
+            padding: 24px;
             display: flex;
             flex-direction: column;
-            gap: 20px;
+            gap: 18px;
         }
 
-        .panel-title {
-            font-size: 1.1rem;
+        .card-header {
+            border-bottom: 1px solid var(--card-border);
+            padding-bottom: 14px;
             font-weight: 600;
-            margin: 0 0 10px 0;
             display: flex;
             align-items: center;
-            gap: 8px;
-            border-bottom: 1px solid var(--border-color);
-            padding-bottom: 12px;
+            gap: 10px;
         }
 
         .form-group {
@@ -108,63 +94,56 @@
 
         label {
             font-size: 0.85rem;
-            font-weight: 500;
-            color: var(--text-primary);
+            font-weight: 600;
+            color: #d1d5db;
         }
 
-        .input-desc {
+        .hint {
             font-size: 0.75rem;
-            color: var(--text-secondary);
+            color: var(--text-muted);
         }
 
         input[type="text"], select {
             width: 100%;
             padding: 10px 14px;
-            background-color: var(--bg-input);
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: var(--text-primary);
-            font-family: var(--font-main);
+            background-color: var(--input-bg);
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            color: var(--text-main);
+            font-family: var(--font-ui);
             font-size: 0.9rem;
-            transition: border-color 0.2s, box-shadow 0.2s;
         }
 
         input[type="text"]:focus, select:focus {
             outline: none;
-            border-color: var(--brand-blue);
-            box-shadow: 0 0 0 3px rgba(88, 166, 255, 0.15);
+            border-color: var(--accent-green);
         }
 
-        .editor-container {
-            display: flex;
-            flex-direction: column;
-            height: 100%;
+        .grid-2 {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
         }
 
         textarea {
             width: 100%;
             flex: 1;
-            min-height: 500px;
-            background-color: #0d1117;
-            border: 1px solid var(--border-color);
-            border-radius: 6px;
-            color: #e6edf3;
+            min-height: 520px;
+            background-color: #030712;
+            border: 1px solid var(--card-border);
+            border-radius: 8px;
+            color: #e5e7eb;
             font-family: var(--font-code);
-            font-size: 0.85rem;
-            line-height: 1.5;
-            padding: 15px;
+            font-size: 0.88rem;
+            line-height: 1.6;
+            padding: 18px;
             resize: vertical;
         }
 
-        textarea:focus {
-            outline: none;
-            border-color: var(--brand-blue);
-        }
-
-        .btn-toolbar {
+        .actions {
             display: flex;
             gap: 12px;
-            margin-top: 15px;
+            margin-top: 10px;
         }
 
         .btn {
@@ -172,160 +151,116 @@
             align-items: center;
             justify-content: center;
             gap: 8px;
-            padding: 10px 18px;
-            border-radius: 6px;
+            padding: 12px 20px;
+            border-radius: 8px;
             font-size: 0.9rem;
-            font-weight: 500;
+            font-weight: 600;
             cursor: pointer;
             border: 1px solid transparent;
             transition: all 0.2s;
         }
 
-        .btn-primary {
-            background-color: var(--accent);
-            color: #ffffff;
+        .btn-green {
+            background-color: var(--accent-green);
+            color: #000;
         }
 
-        .btn-primary:hover {
-            background-color: var(--accent-hover);
+        .btn-green:hover {
+            background-color: var(--accent-green-hover);
+            color: #fff;
         }
 
-        .btn-secondary {
-            background-color: var(--bg-input);
-            color: var(--text-primary);
-            border-color: var(--border-color);
+        .btn-outline {
+            background-color: transparent;
+            color: var(--text-main);
+            border-color: var(--card-border);
         }
 
-        .btn-secondary:hover {
-            background-color: #30363d;
-        }
-
-        footer {
-            text-align: center;
-            padding: 20px;
-            font-size: 0.8rem;
-            color: var(--text-secondary);
-            border-top: 1px solid var(--border-color);
-        }
-
-        footer a {
-            color: var(--brand-blue);
-            text-decoration: none;
-        }
+        .btn-outline:hover { background-color: var(--card-border); }
     </style>
 </head>
 <body>
 
 <header>
-    <h1><i class="fa-solid fa-file-contract"></i> Générateur Pro de Licences <code>LICENSE.md</code></h1>
-    <span class="badge">Génération Anglais Juridique v2.0</span>
+    <div class="brand">
+        <i class="fa-solid fa-link"></i>
+        <span>LicenseGen Pro (URL-Safe)</span>
+    </div>
 </header>
 
-<div class="main-wrapper">
-    <!-- Formulaire de configuration -->
-    <div class="panel">
-        <h2 class="panel-title"><i class="fa-solid fa-sliders"></i> Configuration en Français</h2>
+<div class="container">
+    <div class="card">
+        <div class="card-header">
+            <i class="fa-solid fa-sliders" style="color: var(--accent-blue);"></i> Configuration des Informations & Liens
+        </div>
 
         <div class="form-group">
-            <label for="licenseCategory">1. Catégorie de Licence</label>
-            <select id="licenseCategory" onchange="filterLicenses()">
-                <option value="all">Toutes les licences</option>
-                <option value="cc">Creative Commons (Contenu, Arts, Documentation)</option>
-                <option value="opensource">Open Source / Logiciel Libre (Code)</option>
-                <option value="proprietary">Propriétaire / Droits Réservés Stricts</option>
+            <label for="licenseSelect">Licence Légale</label>
+            <select id="licenseSelect" onchange="generateLicense()">
+                <option value="cc-by-sa-4">CC BY-SA 4.0 (Creative Commons Attribution - Partage Mêmes Conditions)</option>
+                <option value="cc-by-4">CC BY 4.0 (Creative Commons Attribution)</option>
+                <option value="cc-by-nc-4">CC BY-NC 4.0 (Creative Commons Pas d'Usage Commercial)</option>
+                <option value="cc0">CC0 1.0 (Domaine Public)</option>
+                <option value="strict-asset">Licence Propriétaire Stricte (Assets de jeu / Anti-Copy)</option>
+                <option value="mit">MIT License (Open Source)</option>
             </select>
         </div>
 
         <div class="form-group">
-            <label for="licenseType">2. Choisir le modèle de licence</label>
-            <select id="licenseType" onchange="generateLicense()">
-                <!-- Options peuplées dynamiquement par JS -->
-            </select>
+            <label for="projectName">Nom du Projet / Asset</label>
+            <input type="text" id="projectName" value="Pixel Art Potion Asset Pack - 32 Colors PNG" oninput="generateLicense()">
         </div>
 
         <div class="form-group">
-            <label for="projectName">Nom du projet / de l'œuvre</label>
-            <input type="text" id="projectName" value="Mon projet génial" oninput="generateLicense()">
-            <span class="input-desc">Nom de votre application, dépôt GitHub, livre ou contenu.</span>
+            <label for="projectUrl">URL du Projet (Redirection cliquable)</label>
+            <input type="text" id="projectUrl" value="https://nathstudio.itch.io/pixel-art-potion-pack" oninput="generateLicense()">
+            <span class="hint">Les préfixes http:// ou https:// seront automatiquement ajoutés s'ils manquent.</span>
+        </div>
+
+        <div class="grid-2">
+            <div class="form-group">
+                <label for="authorName">Nom de l'Auteur</label>
+                <input type="text" id="authorName" value="Nathaël Delmas" oninput="generateLicense()">
+            </div>
+            <div class="form-group">
+                <label for="year">Année</label>
+                <input type="text" id="year" value="2026" oninput="generateLicense()">
+            </div>
         </div>
 
         <div class="form-group">
-            <label for="projectUrl">URL du projet</label>
-            <input type="text" id="projectUrl" value="https://github.com/mon-utilisateur/mon-projet" oninput="generateLicense()">
-            <span class="input-desc">Sera intégré sous forme de lien hypertexte Markdown [Projet](URL).</span>
-        </div>
-
-        <div class="form-group">
-            <label for="authorName">Nom du titulaire / Auteur / Organisation</label>
-            <input type="text" id="authorName" value="Alexandre Dupont" oninput="generateLicense()">
-            <span class="input-desc">Votre nom propre ou la dénomination sociale de votre entreprise.</span>
-        </div>
-
-        <div class="form-group">
-            <label for="authorUrl">URL du Profil / Titulaire</label>
-            <input type="text" id="authorUrl" value="https://github.com/mon-utilisateur" oninput="generateLicense()">
-            <span class="input-desc">Lien vers votre site web ou profil social/GitHub.</span>
-        </div>
-
-        <div class="form-group">
-            <label for="copyrightYear">Année(s) de Copyright</label>
-            <input type="text" id="copyrightYear" value="2026" oninput="generateLicense()">
-            <span class="input-desc">Exemple : 2026 ou 2024-2026.</span>
+            <label for="authorUrl">URL du Profil / Site Web de l'Auteur</label>
+            <input type="text" id="authorUrl" value="https://nathstudio.itch.io/" oninput="generateLicense()">
         </div>
     </div>
 
-    <!-- Aperçu et téléchargement -->
-    <div class="panel editor-container">
-        <h2 class="panel-title"><i class="fa-regular fa-file-code"></i> Fichier Généré : <code>LICENSE.md</code> (In English)</h2>
-        <span class="input-desc" style="margin-bottom: 10px;">
-            Le texte généré ci-dessous respecte le formalisme anglo-saxon. Vous pouvez éditer le texte brut directement dans la zone de texte si besoin.
-        </span>
+    <div class="card">
+        <div class="card-header">
+            <i class="fa-regular fa-file-code" style="color: var(--accent-green);"></i> Fichier <code>LICENSE.md</code> Généré
+        </div>
 
-        <textarea id="licenseOutput" spellcheck="false"></textarea>
+        <textarea id="output" spellcheck="false"></textarea>
 
-        <div class="btn-toolbar">
-            <button class="btn btn-secondary" onclick="copyToClipboard()"><i class="fa-regular fa-copy"></i> Copier le Texte</button>
-            <button class="btn btn-primary" onclick="downloadMarkdown()"><i class="fa-solid fa-download"></i> Télécharger LICENSE.md</button>
+        <div class="actions">
+            <button class="btn btn-outline" onclick="copyText()"><i class="fa-regular fa-copy"></i> Copier</button>
+            <button class="btn btn-green" onclick="downloadFile()"><i class="fa-solid fa-download"></i> Télécharger LICENSE.md</button>
         </div>
     </div>
 </div>
 
-<footer>
-    <p>Outil hébergeable sur GitHub Pages. Intègre les clauses légales et redirections officielles <a href="https://creativecommons.org/" target="_blank">Creative Commons</a> et Open Source Initiative.</p>
-</footer>
-
 <script>
-// Base de données des licences complètes avec liens officiels Creative Commons
-const licensesData = [
-    // Creative Commons
-    {
-        id: "cc-by",
-        category: "cc",
-        name: "Creative Commons Attribution 4.0 International (CC BY 4.0)",
-        template: `# Creative Commons Attribution 4.0 International Public License
+// Fonction qui sécurise les URLs pour qu'elles fonctionnent toujours en Markdown
+function fixUrl(url) {
+    let cleanUrl = url.trim();
+    if (!cleanUrl || cleanUrl === '#') return '#';
+    if (!/^https?:\/\//i.test(cleanUrl)) {
+        return 'https://' + cleanUrl;
+    }
+    return cleanUrl;
+}
 
-Work: [{PROJECT_NAME}]({PROJECT_URL})
-Copyright (c) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL})
-
-This work is licensed under the **Creative Commons Attribution 4.0 International License**.
-
-### Terms Summary:
-You are free to:
-- **Share**: Copy and redistribute the material in any medium or format.
-- **Adapt**: Remix, transform, and build upon the material for any purpose, even commercially.
-
-Under the following conditions:
-- **Attribution**: You must give appropriate credit to [{AUTHOR_NAME}]({AUTHOR_URL}), provide a link to the license, and indicate if changes were made. You may do so in any reasonable manner, but not in any way that suggests the licensor endorses you or your use.
-
-### Official Deed & Legal Text:
-To view a full copy of this license, visit:
-[https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/) or read the official Legal Code at [https://creativecommons.org/licenses/by/4.0/legalcode](https://creativecommons.org/licenses/by/4.0/legalcode).`
-    },
-    {
-        id: "cc-by-sa",
-        category: "cc",
-        name: "Creative Commons Attribution-ShareAlike 4.0 (CC BY-SA 4.0)",
-        template: `# Creative Commons Attribution-ShareAlike 4.0 International Public License
+const templates = {
+    "cc-by-sa-4": `# Creative Commons Attribution-ShareAlike 4.0 International Public License
 
 Work: [{PROJECT_NAME}]({PROJECT_URL})
 Copyright (c) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL})
@@ -343,294 +278,101 @@ Under the following conditions:
 
 ### Official Deed & Legal Text:
 To view a full copy of this license, visit:
-[https://creativecommons.org/licenses/by-sa/4.0/](https://creativecommons.org/licenses/by-sa/4.0/) or read the official Legal Code at [https://creativecommons.org/licenses/by-sa/4.0/legalcode](https://creativecommons.org/licenses/by-sa/4.0/legalcode).`
-    },
-    {
-        id: "cc-by-nc",
-        category: "cc",
-        name: "Creative Commons Attribution-NonCommercial 4.0 (CC BY-NC 4.0)",
-        template: `# Creative Commons Attribution-NonCommercial 4.0 International License
+[https://creativecommons.org/licenses/by-sa/4.0/](https://creativecommons.org/licenses/by-sa/4.0/) or read the official Legal Code at [https://creativecommons.org/licenses/by-sa/4.0/legalcode](https://creativecommons.org/licenses/by-sa/4.0/legalcode).`,
+
+    "cc-by-4": `# Creative Commons Attribution 4.0 International Public License
 
 Work: [{PROJECT_NAME}]({PROJECT_URL})
 Copyright (c) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL})
 
-This work is licensed under the **Creative Commons Attribution-NonCommercial 4.0 International License**.
+This work is licensed under the **Creative Commons Attribution 4.0 International License**.
 
 ### Terms Summary:
 You are free to:
 - **Share**: Copy and redistribute the material in any medium or format.
-- **Adapt**: Remix, transform, and build upon the material.
+- **Adapt**: Remix, transform, and build upon the material for any purpose, even commercially.
 
 Under the following conditions:
 - **Attribution**: You must give appropriate credit to [{AUTHOR_NAME}]({AUTHOR_URL}), provide a link to the license, and indicate if changes were made.
-- **NonCommercial**: You may not use the material for commercial purposes without explicit permission from [{AUTHOR_NAME}]({AUTHOR_URL}).
 
 ### Official Deed & Legal Text:
-To view a full copy of this license, visit:
-[https://creativecommons.org/licenses/by-nc/4.0/](https://creativecommons.org/licenses/by-nc/4.0/) or read the official Legal Code at [https://creativecommons.org/licenses/by-nc/4.0/legalcode](https://creativecommons.org/licenses/by-nc/4.0/legalcode).`
-    },
-    {
-        id: "cc-by-nc-sa",
-        category: "cc",
-        name: "Creative Commons Attribution-NonCommercial-ShareAlike 4.0 (CC BY-NC-SA 4.0)",
-        template: `# Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License
+[https://creativecommons.org/licenses/by/4.0/](https://creativecommons.org/licenses/by/4.0/)`,
+
+    "cc-by-nc-4": `# Creative Commons Attribution-NonCommercial 4.0 License
 
 Work: [{PROJECT_NAME}]({PROJECT_URL})
 Copyright (c) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL})
 
-This work is licensed under the **Creative Commons Attribution-NonCommercial-ShareAlike 4.0 International License**.
+This work is licensed under the **CC BY-NC 4.0 License**.
 
-### Terms Summary:
-You are free to:
-- **Share**: Copy and redistribute the material in any medium or format.
-- **Adapt**: Remix, transform, and build upon the material.
+Commercial use of [{PROJECT_NAME}]({PROJECT_URL}) is strictly prohibited without written consent from [{AUTHOR_NAME}]({AUTHOR_URL}).
 
-Under the following conditions:
-- **Attribution**: You must give appropriate credit to [{AUTHOR_NAME}]({AUTHOR_URL}), provide a link to the license, and indicate if changes were made.
-- **NonCommercial**: You may not use the material for commercial purposes.
-- **ShareAlike**: If you remix, transform, or build upon the material, you must distribute your contributions under the same license as the original.
+### Official Deed:
+[https://creativecommons.org/licenses/by-nc/4.0/](https://creativecommons.org/licenses/by-nc/4.0/)`,
 
-### Official Deed & Legal Text:
-To view a full copy of this license, visit:
-[https://creativecommons.org/licenses/by-nc-sa/4.0/](https://creativecommons.org/licenses/by-nc-sa/4.0/) or read the official Legal Code at [https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode](https://creativecommons.org/licenses/by-nc-sa/4.0/legalcode).`
-    },
-    {
-        id: "cc-by-nd",
-        category: "cc",
-        name: "Creative Commons Attribution-NoDerivatives 4.0 (CC BY-ND 4.0)",
-        template: `# Creative Commons Attribution-NoDerivatives 4.0 International License
-
-Work: [{PROJECT_NAME}]({PROJECT_URL})
-Copyright (c) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL})
-
-This work is licensed under the **Creative Commons Attribution-NoDerivatives 4.0 International License**.
-
-### Terms Summary:
-You are free to:
-- **Share**: Copy and redistribute the material in any medium or format for any purpose, even commercially.
-
-Under the following conditions:
-- **Attribution**: You must give appropriate credit to [{AUTHOR_NAME}]({AUTHOR_URL}) and provide a link to the license.
-- **NoDerivatives**: If you remix, transform, or build upon the material, you may not distribute the modified material.
-
-### Official Deed & Legal Text:
-To view a full copy of this license, visit:
-[https://creativecommons.org/licenses/by-nd/4.0/](https://creativecommons.org/licenses/by-nd/4.0/) or read the official Legal Code at [https://creativecommons.org/licenses/by-nd/4.0/legalcode](https://creativecommons.org/licenses/by-nd/4.0/legalcode).`
-    },
-    {
-        id: "cc-by-nc-nd",
-        category: "cc",
-        name: "Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 (CC BY-NC-ND 4.0)",
-        template: `# Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License
-
-Work: [{PROJECT_NAME}]({PROJECT_URL})
-Copyright (c) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL})
-
-This work is licensed under the **Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International License**.
-
-### Terms Summary:
-You are free to:
-- **Share**: Copy and redistribute the material in any medium or format.
-
-Under the following conditions:
-- **Attribution**: You must give appropriate credit to [{AUTHOR_NAME}]({AUTHOR_URL}) and provide a link to the license.
-- **NonCommercial**: You may not use the material for commercial purposes.
-- **NoDerivatives**: If you remix, transform, or build upon the material, you may not distribute the modified material.
-
-### Official Deed & Legal Text:
-To view a full copy of this license, visit:
-[https://creativecommons.org/licenses/by-nc-nd/4.0/](https://creativecommons.org/licenses/by-nc-nd/4.0/) or read the official Legal Code at [https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode](https://creativecommons.org/licenses/by-nc-nd/4.0/legalcode).`
-    },
-    {
-        id: "cc0",
-        category: "cc",
-        name: "Creative Commons Zero v1.0 Universal (CC0 1.0 - Public Domain)",
-        template: `# CC0 1.0 Universal (CC0 1.0) Public Domain Dedication
+    "cc0": `# CC0 1.0 Universal (Public Domain Dedication)
 
 Work: [{PROJECT_NAME}]({PROJECT_URL})
 Dedicated by: [{AUTHOR_NAME}]({AUTHOR_URL}) ({YEAR})
 
-The person who associated a work with this deed has dedicated the work to the public domain by waiving all of his or her rights to the work worldwide under copyright law, including all related and neighboring rights, to the extent allowed by law.
+### Official Legal Text:
+[https://creativecommons.org/publicdomain/zero/1.0/](https://creativecommons.org/publicdomain/zero/1.0/)`,
 
-You can copy, modify, distribute and perform the work, even for commercial purposes, all without asking permission.
+    "strict-asset": `# Proprietary Game Asset License
 
-### Official Deed & Legal Text:
-To view a full copy of this dedication, visit:
-[https://creativecommons.org/publicdomain/zero/1.0/](https://creativecommons.org/publicdomain/zero/1.0/) or read the official Legal Code at [https://creativecommons.org/publicdomain/zero/1.0/legalcode](https://creativecommons.org/publicdomain/zero/1.0/legalcode).`
-    },
-
-    // Open Source
-    {
-        id: "mit",
-        category: "opensource",
-        name: "MIT License (Permissive & Open Source)",
-        template: `# MIT License
-
-Copyright (c) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL}) - [{PROJECT_NAME}]({PROJECT_URL})
-
-Permission is hereby granted, free of charge, to any person obtaining a copy
-of this software and associated documentation files (the "Software"), to deal
-in the Software without restriction, including without limitation the rights
-to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
-copies of the Software, and to permit persons to whom the Software is
-furnished to do so, subject to the following conditions:
-
-The above copyright notice and this permission notice shall be included in all
-copies or substantial portions of the Software.
-
-THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
-IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
-FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
-AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
-LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
-OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
-SOFTWARE.`
-    },
-    {
-        id: "apache2",
-        category: "opensource",
-        name: "Apache License 2.0 (Open Source with Patent Rights)",
-        template: `# Apache License, Version 2.0
-
-Copyright (c) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL}) - [{PROJECT_NAME}]({PROJECT_URL})
-
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
-
-    http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.`
-    },
-    {
-        id: "gpl3",
-        category: "opensource",
-        name: "GNU General Public License v3.0 (GPLv3 - Copyleft)",
-        template: `# GNU GENERAL PUBLIC LICENSE (Version 3)
-
-Project: [{PROJECT_NAME}]({PROJECT_URL})
-Copyright (C) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL})
-
-This program is free software: you can redistribute it and/or modify
-it under the terms of the GNU General Public License as published by
-the Free Software Foundation, either version 3 of the License, or
-(at your option) any later version.
-
-This program is distributed in the hope that it will be useful,
-but WITHOUT ANY WARRANTY; without even the implied warranty of
-MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
-GNU General Public License for more details.
-
-You should have received a copy of the GNU General Public License
-along with this program. If not, see <https://www.gnu.org/licenses/>.`
-    },
-
-    // Propriétaire / Strict
-    {
-        id: "proprietary-strict",
-        category: "proprietary",
-        name: "Licence Propriétaire Stricte (Anti-Contournement & Anti-IA)",
-        template: `# Strict Proprietary and Closed Source License
-
+Asset Name: [{PROJECT_NAME}]({PROJECT_URL})
+Author: [{AUTHOR_NAME}]({AUTHOR_URL})
 Copyright (c) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL}). All Rights Reserved.
 
-Project Name: [{PROJECT_NAME}]({PROJECT_URL})
+### Conditions:
+1. You may use [{PROJECT_NAME}]({PROJECT_URL}) in your published games or projects.
+2. You CANNOT resell, redistribute, or share the source files.
+3. Training AI models using this asset is explicitly prohibited.`,
 
-### 1. Ownership & Exclusive Rights
-All rights, title, and interest in and to [{PROJECT_NAME}]({PROJECT_URL}), including without limitation any software code, designs, graphics, text, documentation, and architecture, belong exclusively to [{AUTHOR_NAME}]({AUTHOR_URL}).
+    "mit": `# MIT License
 
-### 2. Strict Restrictions & Anti-Circumvention
-- **No Unauthorized Use**: You may not copy, reproduce, distribute, display, perform, modify, create derivative works from, or commercialize any part of this project without express written permission.
-- **Anti-Bypassing / Anti-Circumvention**: Any attempt to bypass, disable, alter, or circumvent any technical protection measures, licensing mechanisms, or security restrictions implemented in [{PROJECT_NAME}]({PROJECT_URL}) is strictly illegal.
-- **No Reverse Engineering**: Decompilation, disassembly, reverse engineering, or extraction of source code is strictly prohibited.
-- **AI Training Prohibition**: Mining, scraping, or utilizing any portion of this repository/project to train Artificial Intelligence (AI) or Machine Learning (ML) models is strictly forbidden.
+Copyright (c) {YEAR} [{AUTHOR_NAME}]({AUTHOR_URL}) - [{PROJECT_NAME}]({PROJECT_URL})
 
-### 3. Legal Enforcement
-Unauthorized exploitation of this intellectual property will be prosecuted to the maximum extent permissible under international copyright laws.
-
-THE SOFTWARE/WORK IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND.`
-    }
-];
-
-function populateLicenseDropdown(filteredLicenses) {
-    const select = document.getElementById('licenseType');
-    select.innerHTML = '';
-    
-    filteredLicenses.forEach(lic => {
-        const option = document.createElement('option');
-        option.value = lic.id;
-        option.textContent = lic.name;
-        select.appendChild(option);
-    });
-    
-    generateLicense();
-}
-
-function filterLicenses() {
-    const cat = document.getElementById('licenseCategory').value;
-    if (cat === 'all') {
-        populateLicenseDropdown(licensesData);
-    } else {
-        const filtered = licensesData.filter(l => l.category === cat);
-        populateLicenseDropdown(filtered);
-    }
-}
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and associated documentation files.`
+};
 
 function generateLicense() {
-    const selectedId = document.getElementById('licenseType').value;
-    const licObj = licensesData.find(l => l.id === selectedId);
-    
-    if (!licObj) return;
+    const key = document.getElementById('licenseSelect').value;
+    const template = templates[key];
 
-    const authorName = document.getElementById('authorName').value || 'Owner Name';
-    const authorUrl = document.getElementById('authorUrl').value || '#';
-    const projectName = document.getElementById('projectName').value || 'Project Name';
-    const projectUrl = document.getElementById('projectUrl').value || '#';
-    const year = document.getElementById('copyrightYear').value || new Date().getFullYear();
+    const projName = document.getElementById('projectName').value || 'Project';
+    const projUrl = fixUrl(document.getElementById('projectUrl').value);
+    const author = document.getElementById('authorName').value || 'Author';
+    const authorUrl = fixUrl(document.getElementById('authorUrl').value);
+    const year = document.getElementById('year').value || '2026';
 
-    let output = licObj.template
-        .replaceAll('{AUTHOR_NAME}', authorName)
+    let result = template
+        .replaceAll('{PROJECT_NAME}', projName)
+        .replaceAll('{PROJECT_URL}', projUrl)
+        .replaceAll('{AUTHOR_NAME}', author)
         .replaceAll('{AUTHOR_URL}', authorUrl)
-        .replaceAll('{PROJECT_NAME}', projectName)
-        .replaceAll('{PROJECT_URL}', projectUrl)
         .replaceAll('{YEAR}', year);
 
-    document.getElementById('licenseOutput').value = output;
+    document.getElementById('output').value = result;
 }
 
-function copyToClipboard() {
-    const textarea = document.getElementById('licenseOutput');
-    textarea.select();
-    navigator.clipboard.writeText(textarea.value).then(() => {
-        alert('Le code Markdown de la licence a été copié dans votre presse-papier !');
-    }).catch(() => {
-        document.execCommand('copy');
-        alert('Texte copié !');
-    });
+function copyText() {
+    const area = document.getElementById('output');
+    area.select();
+    navigator.clipboard.writeText(area.value);
+    alert('Licence copiée avec liens valides !');
 }
 
-function downloadMarkdown() {
-    const text = document.getElementById('licenseOutput').value;
+function downloadFile() {
+    const text = document.getElementById('output').value;
     const blob = new Blob([text], { type: 'text/markdown;charset=utf-8;' });
-    const link = document.createElement('a');
-    
-    link.href = URL.createObjectURL(blob);
-    link.download = 'LICENSE.md';
-    link.style.display = 'none';
-    
-    document.body.appendChild(link);
-    link.click();
-    document.body.removeChild(link);
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(blob);
+    a.download = 'LICENSE.md';
+    a.click();
 }
 
-// Initialisation au chargement de la page
-window.onload = () => {
-    filterLicenses();
-};
+window.onload = generateLicense;
 </script>
 
 </body>
