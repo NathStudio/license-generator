@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Générateur Pro de Licences (Architecture Modulaire)</title>
+    <title>Générateur de Licences - Architecture Modulaire</title>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -183,39 +183,38 @@
 
 <header>
     <div class="brand">
-        <i class="fa-solid fa-folder-tree"></i>
-        <span>LicenseGen Pro (Fichiers Externe `.md`)</span>
+        <i class="fa-solid fa-scale-balanced"></i>
+        <span>LicenseGen Pro</span>
     </div>
 </header>
 
 <div class="container">
     <div class="card">
         <div class="card-header">
-            <i class="fa-solid fa-sliders" style="color: var(--accent-blue);"></i> Configuration des Informations
+            <i class="fa-solid fa-sliders" style="color: var(--accent-blue);"></i> Configuration du Projet
         </div>
 
         <div class="form-group">
-            <label for="licenseSelect">Modèle de Licence (Fichier `.md` source)</label>
+            <label for="licenseSelect">Modèle de Licence</label>
             <select id="licenseSelect" onchange="loadAndGenerateLicense()">
-                <optgroup label="Creative Commons (International v4.0)">
-                    <option value="cc-by-sa-4.md">CC BY-SA 4.0 (Attribution - ShareAlike)</option>
-                    <option value="cc-by-4.md">CC BY 4.0 (Attribution Pure)</option>
-                    <option value="cc-by-nc-4.md">CC BY-NC 4.0 (Non Commercial)</option>
-                    <option value="cc-by-nc-sa-4.md">CC BY-NC-SA 4.0 (Non Commercial - ShareAlike)</option>
+                <optgroup label="Creative Commons 4.0">
+                    <option value="cc-by-4.md">CC BY 4.0 (Attribution)</option>
+                    <option value="cc-by-nc-4.md">CC BY-NC 4.0 (Attribution - Pas d'Usage Commercial)</option>
+                    <option value="cc-by-nc-nd-4.md">CC BY-NC-ND 4.0 (Non Commercial - Pas de Modification)</option>
+                    <option value="cc-by-nc-sa-4.md">CC BY-NC-SA 4.0 (Non Commercial - Partage Mêmes Conditions)</option>
                     <option value="cc-by-nd-4.md">CC BY-ND 4.0 (Pas de Modification)</option>
-                    <option value="cc-by-nc-nd-4.md">CC BY-NC-ND 4.0 (Non Commercial - Pas de Modif)</option>
-                    <option value="cc0.md">CC0 1.0 (Domaine Public)</option>
+                    <option value="cc-by-sa-4.md">CC BY-SA 4.0 (Partage Mêmes Conditions)</option>
+                    <option value="cc0.md">CC0 1.0 Universal (Domaine Public)</option>
                 </optgroup>
-                <optgroup label="Assets de Jeu & Droits Stricts">
-                    <option value="game-asset-strict.md">Assets de Jeu - Anti-Scraping / Anti-IA / Anti-Redistribution</option>
-                    <option value="proprietary-strict.md">Licence Propriétaire - Tous Droits Réservés</option>
+                <optgroup label="Licences Propriétaires & Assets">
+                    <option value="game-asset-strict.md">Licence Asset de Jeu (Anti-Scraping / Anti-IA)</option>
+                    <option value="proprietary-strict.md">Propriétaire Stricte (Tous Droits Réservés)</option>
                 </optgroup>
-                <optgroup label="Open Source / Software">
+                <optgroup label="Logiciel Open Source">
                     <option value="mit.md">MIT License</option>
                     <option value="apache2.md">Apache License 2.0</option>
                     <option value="gpl3.md">GNU GPL v3.0</option>
                     <option value="bsd-3.md">BSD 3-Clause License</option>
-                    <option value="mpl2.md">Mozilla Public License 2.0</option>
                 </optgroup>
             </select>
         </div>
@@ -226,14 +225,13 @@
         </div>
 
         <div class="form-group">
-            <label for="projectUrl">URL du Projet (Lien Cliquable)</label>
+            <label for="projectUrl">URL du Projet</label>
             <input type="text" id="projectUrl" value="https://nathstudio.itch.io/pixel-art-potion-pack" oninput="renderLicense()">
-            <span class="hint">Préfixe https:// ajouté automatiquement si absent.</span>
         </div>
 
         <div class="grid-2">
             <div class="form-group">
-                <label for="authorName">Nom de l'Auteur / Titulaire</label>
+                <label for="authorName">Auteur / Titulaire</label>
                 <input type="text" id="authorName" value="Nathaël Delmas" oninput="renderLicense()">
             </div>
             <div class="form-group">
@@ -243,13 +241,13 @@
         </div>
 
         <div class="form-group">
-            <label for="authorUrl">URL du Profil / Site Web de l'Auteur</label>
+            <label for="authorUrl">URL du Profil / Site Web</label>
             <input type="text" id="authorUrl" value="https://nathstudio.itch.io/" oninput="renderLicense()">
         </div>
 
         <div class="form-group">
-            <label for="creditFormat">Format d'Attribution / Crédit Obligatoire</label>
-            <input type="text" id="creditFormat" value="Pixel Art Potion Asset Pack par Nathaël Delmas (https://nathstudio.itch.io/)" oninput="renderLicense()">
+            <label for="creditFormat">Format de Crédit Obligatoire</label>
+            <input type="text" id="creditFormat" value="Pixel Art Potion Asset Pack by Nathaël Delmas (https://nathstudio.itch.io/)" oninput="renderLicense()">
         </div>
     </div>
 
@@ -279,7 +277,6 @@ function fixUrl(url) {
     return cleanUrl;
 }
 
-// Récupère le fichier .md sélectionné dans le dossier /licenses/
 async function loadAndGenerateLicense() {
     const file = document.getElementById('licenseSelect').value;
     try {
@@ -288,11 +285,10 @@ async function loadAndGenerateLicense() {
         rawTemplate = await response.text();
         renderLicense();
     } catch (err) {
-        document.getElementById('output').value = `Erreur de chargement du fichier licenses/${file}.\nVérifiez que le fichier existe bien dans votre dépôt GitHub.`;
+        document.getElementById('output').value = `Erreur: le fichier ./licenses/${file} est introuvable.`;
     }
 }
 
-// Remplace dynamiquement les balises dans le fichier .md chargé
 function renderLicense() {
     if (!rawTemplate) return;
 
@@ -301,7 +297,7 @@ function renderLicense() {
     const author = document.getElementById('authorName').value || 'Author';
     const authorUrl = fixUrl(document.getElementById('authorUrl').value);
     const year = document.getElementById('year').value || '2026';
-    const credit = document.getElementById('creditFormat').value || `${projName} by ${author}`;
+    const credit = document.getElementById('creditFormat').value || `${projName} by${author}`;
 
     let result = rawTemplate
         .replaceAll('{PROJECT_NAME}', projName)
@@ -318,7 +314,7 @@ function copyText() {
     const area = document.getElementById('output');
     area.select();
     navigator.clipboard.writeText(area.value);
-    alert('Licence copiée !');
+    alert('Licence copiée dans le presse-papier !');
 }
 
 function downloadFile() {
